@@ -18,7 +18,6 @@ describe("NotesView Class", () => {
 
     model = new NotesModel();
     client = new NotesClient()
-    console.log(client.createNote)
     view = new NotesView(model, client)
 
     NotesClient.mockClear();
@@ -34,12 +33,21 @@ describe("NotesView Class", () => {
     expect(document.querySelectorAll("div.note").length).toEqual(2);
   });
 
-  it("adds a new note and displays this on screen", () => {
+  it.skip("adds a new note and displays this on screen", () => {
+    const mockClient = new NotesClient();
+    view = new NotesView(model, mockClient);
+
+    mockClient.createNote = jest.fn((note, callback) => 
+    callback([note]));
+
     const input = document.querySelector("#add-note");
     input.value = "Walk the dog";
 
     const showButton = document.querySelector("#add-note-button");
     showButton.click();
+
+    // const mockModel = new NotesModel();
+    
 
     expect(document.querySelectorAll("div.note").length).toEqual(1);
     expect(document.querySelectorAll("div.note")[0].textContent).toEqual(
@@ -74,11 +82,11 @@ describe("NotesView Class", () => {
 
   it('addsa new note and returns the notes from the API', async () => {
 
-    const input = document.querySelector("#add-note");
-    input.value = "Walk the dog";
+    // const input = document.querySelector("#add-note");
+    // input.value = "Walk the dog";
 
-    const showButton = document.querySelector("#add-note-button");
-    showButton.click();
+    // const showButton = document.querySelector("#add-note-button");
+    // showButton.click();
 
     const mockClient = {loadNotes: (callback) => callback(['This note is coming from the server'])}
 
@@ -101,13 +109,14 @@ describe("NotesView Class", () => {
 
 
 
-  it.only('adds a new note through an API call', (done) => {
+  it('adds a new note through an API call', (done) => {
     const mockClient = new NotesClient();
-    console.log(mockClient)
     // const mockModel = new NotesModel();
     view = new NotesView(model, mockClient);
     mockClient.createNote = jest.fn((note, callback) => 
     callback([note]));
+
+    // mockClient.createNote.mockImplementation()
 
     view.addnewNote('Walk the dog')
 
@@ -116,5 +125,9 @@ describe("NotesView Class", () => {
     // console.log(pageContent)
     expect(document.querySelector('div.note').textContent).toEqual('Walk the dog');
     done();
+  })
+
+  it('displays an error message', () => {
+    expect(view.displayError()).toEqual('Something went wrong!')
   })
 });

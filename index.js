@@ -9,6 +9,14 @@ const noteModel = new notesModel()
 const noteClient = new notesClient()
 const noteView = new notesView(noteModel, noteClient)
 
+noteClient.loadNotes((notes) => {
+  // This will be executed if notes are loaded correctly from the server
+  noteModel.setNotes(notes);
+  noteView.displayNotes();
+}, () => {
+  // This will be executed if there's an error
+  noteView.displayError();
+});
 
 // noteModel.addNote('Buy Milk')
 // noteModel.addNote('Go to the gym')

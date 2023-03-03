@@ -1,8 +1,12 @@
 class NotesClient {
-  loadNotes = (callback) => {
+  loadNotes = (callback, errorCallback) => {
     fetch("http://localhost:3000/notes")
       .then((response) => response.json())
-      .then((data) => callback(data));
+      .then((data) => callback(data))
+      .catch((error) => {
+        console.error;
+        errorCallback(error);
+      });
   };
 
   createNote = (note, callback) => {
@@ -15,8 +19,12 @@ class NotesClient {
       },
       body: JSON.stringify(data),
     })
-    .then((response) => response.json())
-    .then((data) => callback(data));
+      .then((response) => response.json())
+      .then((data) => callback(data))
+      .catch((error) => {
+        console.error;
+        errorCallback(error);
+      });
   };
 }
 
