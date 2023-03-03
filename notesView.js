@@ -52,11 +52,11 @@ class NotesView {
     }) 
   }
   
-  displayError = () => {
+  displayError = (error) => {
     const div = document.createElement("div");
     div.className = "error";
-    div.textContent = "Oops, something went wrong!" + error;
-    this.mainContainer.append(div);
+    div.textContent = "Oops, something went wrong!";
+    this.mainContainerEl.append(div);
   }
 }
 

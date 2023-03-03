@@ -120,7 +120,7 @@ describe("NotesView Class", () => {
 
     view.addnewNote('Walk the dog')
 
-    expect(mockClient.createNote).toHaveBeenCalledWith('Walk the dog', expect.anything())
+    expect(mockClient.createNote).toHaveBeenCalledWith('Walk the dog', expect.anything(), expect.anything())
     // const pageContent = document.querySelector('div#note');
     // console.log(pageContent)
     expect(document.querySelector('div.note').textContent).toEqual('Walk the dog');
@@ -128,6 +128,8 @@ describe("NotesView Class", () => {
   })
 
   it('displays an error message', () => {
-    expect(view.displayError()).toEqual('Something went wrong!')
+    view.displayError()
+
+    expect(document.querySelector('div.error').textContent).toEqual("Oops, something went wrong!")
   })
 });

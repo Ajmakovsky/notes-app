@@ -1,15 +1,15 @@
 class NotesClient {
-  loadNotes = (callback, errorCallback) => {
+  loadNotes = (callback, displayError) => {
     fetch("http://localhost:3000/notes")
       .then((response) => response.json())
       .then((data) => callback(data))
-      .catch((error) => {
-        console.error;
-        errorCallback(error);
+      .catch(error => {
+        console.log('Error:' + error);
+        displayError(error)
       });
   };
 
-  createNote = (note, callback) => {
+  createNote = (note, callback, displayError) => {
     const data = { content: note };
     // method should send a POST request to the notes backend to create a new note.
     fetch("http://localhost:3000/notes", {
@@ -21,9 +21,9 @@ class NotesClient {
     })
       .then((response) => response.json())
       .then((data) => callback(data))
-      .catch((error) => {
-        console.error;
-        errorCallback(error);
+      .catch(error => {
+        console.log('Error:' + error);
+        displayError(error)
       });
   };
 }
